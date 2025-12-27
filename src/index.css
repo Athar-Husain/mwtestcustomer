@@ -1,0 +1,16 @@
+.menu-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  color: #000;
+  text-decoration: none;
+}
+
+.menu-item.active {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.menu-item:hover {
+  background-color: #f1f1f1;
+}
