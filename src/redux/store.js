@@ -18,6 +18,7 @@ import paymentReducer from './features/Payments/PaymentSlice';
 import upcomingPaymentsReducer from './features/Payments/upcomingPaymentsSlice';
 import billingAddressReducer from './features/Account/billingAddresslice';
 import complaintReducer from './features/Support/ComplaintSlice';
+import leadReducer from './features/Leads/LeadSlice';
 
 export const store = configureStore({
   reducer: {
@@ -34,6 +35,7 @@ export const store = configureStore({
     payments: paymentReducer,
     upcomingPayments: upcomingPaymentsReducer,
     billingAddress: billingAddressReducer,
-    complaints: complaintReducer
+    complaints: complaintReducer,
+    lead: leadReducer
   }
 });

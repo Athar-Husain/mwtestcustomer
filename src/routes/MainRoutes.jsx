@@ -74,6 +74,7 @@ import TicketsList from '../views/Tickets/TicketsList';
 import ReferralScreen from '../views/Referral/ReferralScreen';
 import Billings from '../views/Billings/Billings';
 import TicketDetails from '../views/Tickets/TicketDetails';
+import CustomerReferralDashboard from '../views/Referral/CustomerReferralDashboard';
 // import Billings from '../views/Payments/Billings';
 
 const MainRoutes = [
@@ -101,7 +102,8 @@ const MainRoutes = [
           { path: '/complaints/live-chat', element: <LiveChat /> },
           { path: '/connections', element: <Connnections /> },
           { path: '/profile', element: <ProfileScreen /> },
-          { path: '/referrals', element: <ReferralScreen /> }
+          { path: '/referrals', element: <ReferralScreen /> },
+          { path: '/referral', element: <CustomerReferralDashboard /> }
         ]
       }
     ]

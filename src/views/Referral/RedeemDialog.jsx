@@ -19,9 +19,10 @@ import {
   InputLabel
 } from '@mui/material';
 import { Close as CloseIcon, Router as RouterIcon } from '@mui/icons-material';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const RedeemDialog = ({ open, onClose }) => {
+  const dispatch = useDispatch()
   const { customer } = useSelector((state) => state.customer);
   const [redeemType, setRedeemType] = useState('bill_credit');
   const [pointsToRedeem, setPointsToRedeem] = useState(100);
@@ -34,14 +35,34 @@ const RedeemDialog = ({ open, onClose }) => {
     return `${months} month upgrade`;
   };
 
-  const handleRedeem = () => {
-    const payload = {
-      redemptionType: redeemType,
-      points: pointsToRedeem,
-      connectionId: selectedConnection
-    };
-    console.log('Redeeming points for specific connection:', payload);
-    // dispatch(redeemPointsAction(payload));
+  // const handleRedeem = () => {
+  //   const payload = {
+  //     redemptionType: redeemType,
+  //     points: pointsToRedeem,
+  //     connectionId: selectedConnection
+  //   };
+  //   console.log('Redeeming points for specific connection:', payload);
+  //   // dispatch(redeemPointsAction(payload));
+  // };
+
+  // Inside RedeemDialog.jsx
+  const handleRedeem = async () => {
+    try {
+      const payload = {
+        redemptionType: redeemType, // 'bill_credit' or 'speed_upgrade'
+        points: pointsToRedeem,
+        connectionId: selectedConnection
+      };
+
+      // Replace this with your actual API call
+      const response = await dispatch(redeemCustomerPoints(payload)).unwrap();
+
+      // Success feedback
+      alert(`Successfully redeemed! New balance: ${response.newBalance}`);
+      onClose();
+    } catch (error) {
+      alert(error.message || 'Redemption failed');
+    }
   };
 
   return (
