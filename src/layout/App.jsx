@@ -38,7 +38,7 @@ const App = () => {
       }
     };
     initSession();
-  }, [dispatch]);
+  }, [dispatch, customer]);
 
   return (
     <>

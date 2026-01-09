@@ -140,9 +140,6 @@ const customerSlice = createSlice({
       .addCase(loginCustomer.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        // The token/expiry are saved in localStorage by the service layer
-        // We set isLoggedIn here, and the App component will call getCustomerProfile
-        // to populate `state.customer`.
         state.isLoggedIn = true;
 
         localStorage.setItem('access_token', action.payload.token);
