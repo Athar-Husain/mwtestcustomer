@@ -8,8 +8,6 @@ export default function ThemeRoutes() {
 
   const routes = isLoggedIn ? [...MainRoutes] : [...AuthenticationRoutes];
 
- 
-
   // Add fallback route
   routes.push({
     path: '*',

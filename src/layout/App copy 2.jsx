@@ -21,23 +21,30 @@ const App = () => {
       const isValidToken = token && expiry && Date.now() < parseInt(expiry, 10);
 
       if (!isValidToken) {
-        // console.warn('No valid token. Skipping session check.');
+        console.warn('No valid token. Skipping session check.');
         dispatch(logoutCustomer());
         return;
       }
 
       try {
+        // 1. Check if the token is still valid on the server
         const status = await dispatch(getCustomerLoginStatus()).unwrap();
+
+        // if (status) {
+        // 2. If status is true AND we haven't fetched the profile yet, fetch it.
         if (status && !customer) {
           await dispatch(getCustomerProfile()).unwrap();
         }
         // }
       } catch (error) {
-        // console.error('Session check failed:', error);
+        console.error('Session check failed:', error);
         dispatch(logoutCustomer());
       }
     };
+
     initSession();
+    // FIX: Added 'customer' to dependency array. It is used in the inner function
+    // to determine if the profile needs to be fetched after status check.
   }, [dispatch]);
 
   return (

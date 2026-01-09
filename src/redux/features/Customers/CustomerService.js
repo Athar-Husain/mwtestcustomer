@@ -86,11 +86,11 @@ const CustomerService = {
 
   // Logs out the customer
   logout: async () => {
-    const response = await axiosInstance.post('/logout');
+    // const response = await axiosInstance.post('/logout');
     TokenManager.clear();
-
+    return 'Logout successful';
     // FIX: Simplified return value. The slice handles the toast message.
-    return response.data;
+    // return response.data;
   },
 
   switchConnection: (data) => axiosInstance.patch('/switchConnection', data).then((res) => res.data),

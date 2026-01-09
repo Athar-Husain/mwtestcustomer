@@ -6,8 +6,8 @@ const token = localStorage.getItem('access_token');
 const tokenExpiry = localStorage.getItem('token_expiry');
 
 const initialState = {
-  isLoggedIn: !!(token && tokenExpiry && Date.now() < +tokenExpiry),
   customer: null, // For logged-in or fetched single customer
+  isLoggedIn: !!(token && tokenExpiry && Date.now() < +tokenExpiry),
   isLoading: false,
   isSuccess: false,
   isError: false,
@@ -22,7 +22,10 @@ const getError = (err) => err?.response?.data?.message || err.message || 'Someth
 // Login customer
 export const loginCustomer = createAsyncThunk('customer/login', async (data, thunkAPI) => {
   try {
-    return await CustomerService.login(data);
+    // return await CustomerService.login(data);
+
+    const response = await CustomerService.login(data);
+    return response;
   } catch (error) {
     return thunkAPI.rejectWithValue(getError(error));
   }
@@ -142,6 +145,10 @@ const customerSlice = createSlice({
         // to populate `state.customer`.
         state.isLoggedIn = true;
 
+        localStorage.setItem('access_token', action.payload.token);
+        localStorage.setItem('token_expiry', Date.now() + action.payload.expiresIn * 1000); // expiresIn in seconds?
+        // toast.success('Login successful');
+
         // FIX: Removed duplicate toast
         toast.success('Login successful!');
       })
@@ -168,6 +175,26 @@ const customerSlice = createSlice({
         state.isSuccess = true;
         // Payload from getStatus is a boolean true/false
         state.isLoggedIn = action.payload;
+      })
+      .addCase(getCustomerLoginStatus.rejected, (state, action) => {
+        state.isLoading = false;
+        // console.log('Login status rejected:');
+        state.isLoggedIn = false;
+        state.customer = null;
+        state.isError = true;
+        state.message = action.payload;
+        if (action.payload.includes('jwt expired')) {
+          state.isLoggedIn = false;
+          localStorage.removeItem('access_token');
+          localStorage.removeItem('token_expiry');
+          toast.info('Session Expires Please Login', {
+            position: 'top-center' // Position the toast at the top center
+          });
+        }
+
+        // toast.info('Session expired. Please login again.');
+        // localStorage.removeItem('access_token');
+        // localStorage.removeItem('token_expiry');
       })
 
       // Update customer
@@ -202,16 +229,12 @@ const customerSlice = createSlice({
 
       // Logout customer
       .addCase(logoutCustomer.fulfilled, (state) => {
-        if (state.isLoggedIn) {
-          // Only toast if they were actually logged in
-          toast.success('Logged out successfully!');
-        }
         state.isLoggedIn = false;
         state.customer = null;
 
         localStorage.removeItem('access_token');
         localStorage.removeItem('token_expiry');
-        toast.success('Logged out successfully!');
+        toast.info('Logged out');
       })
 
       .addCase(switchConnection.fulfilled, (state, action) => {

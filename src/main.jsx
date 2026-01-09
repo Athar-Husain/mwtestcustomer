@@ -1,14 +1,14 @@
-import { StrictMode } from 'react'
+import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
 import './assets/scss/style.scss';
 import 'react-toastify/dist/ReactToastify.css';
-import './index.css'
-import App from './layout/App'
+// import './index.css'
+import App from './layout/App';
 
-import { store } from './redux/store'
+import { store } from './redux/store';
 // const store = configureStore({ reducer });
 
 createRoot(document.getElementById('root')).render(
@@ -18,5 +18,5 @@ createRoot(document.getElementById('root')).render(
         <App />
       </BrowserRouter>
     </Provider>
-  </StrictMode>,
-)
+  </StrictMode>
+);

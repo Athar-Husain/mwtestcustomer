@@ -4,11 +4,24 @@ import { useForm } from 'react-hook-form';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 // Material UI components
-import { useTheme } from '@mui/material/styles';
-import { Box, Button, Divider, Grid, TextField, Typography, FormControl, InputLabel, OutlinedInput, InputAdornment, IconButton, FormHelperText } from '@mui/material';
+// import { useTheme } from '@mui/material/styles';
+import {
+  Box,
+  Button,
+  Divider,
+  Grid,
+  TextField,
+  Typography,
+  FormControl,
+  InputLabel,
+  OutlinedInput,
+  InputAdornment,
+  IconButton,
+  FormHelperText,
+  useTheme
+} from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-
 
 // Logo
 import Google from '../../assets/images/logo-dark.svg';
@@ -27,13 +40,17 @@ const AuthLogin = () => {
 
   const [showPassword, setShowPassword] = useState(false);
 
-  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting }
+  } = useForm();
 
   const onSubmit = async (data) => {
     try {
       // Dispatch the login action and wait until it completes
       await dispatch(loginCustomer(data)).unwrap();
-      
+
       // After successful login, navigate to the destination route
       navigate(from, { replace: true });
     } catch (err) {
@@ -45,7 +62,7 @@ const AuthLogin = () => {
     <>
       <Grid container justifyContent="center">
         {/* FIX: Use 'item' and standard MUI responsive props (xs) instead of non-standard 'size' */}
-        <Grid item xs={12}> 
+        <Grid size={{ xs: 12 }}>
           <Button
             fullWidth
             sx={{
@@ -59,12 +76,7 @@ const AuthLogin = () => {
             size="large"
             variant="contained"
           >
-            <img
-              src={Google}
-              alt="google"
-              width="20px"
-              style={{ marginRight: '16px' }}
-            />
+            <img src={Google} alt="google" width="20px" style={{ marginRight: '16px' }} />
             Sign in with Google
           </Button>
         </Grid>
@@ -109,11 +121,7 @@ const AuthLogin = () => {
             })}
             endAdornment={
               <InputAdornment position="end">
-                <IconButton
-                  onClick={() => setShowPassword((show) => !show)}
-                  onMouseDown={(e) => e.preventDefault()}
-                  edge="end"
-                >
+                <IconButton onClick={() => setShowPassword((show) => !show)} onMouseDown={(e) => e.preventDefault()} edge="end">
                   {showPassword ? <Visibility /> : <VisibilityOff />}
                 </IconButton>
               </InputAdornment>

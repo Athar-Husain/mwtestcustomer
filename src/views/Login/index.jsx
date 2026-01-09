@@ -24,7 +24,7 @@ const Login = () => {
       sx={{ backgroundColor: theme.palette.common.black, height: '100%', minHeight: '100vh' }}
     >
       {/* FIX: Must use 'item' and standard responsive props (xs, sm, etc.) */}
-      <Grid item xs={11} sm={7} md={6} lg={4}>
+      <Grid size={{ xs: 11, sm: 7, md: 6, lg: 4 }}>
         <Card
           sx={{
             overflow: 'visible',
@@ -42,10 +42,10 @@ const Login = () => {
           <CardContent sx={{ p: theme.spacing(5, 4, 3, 4) }}>
             <Grid container direction="column" spacing={4} justifyContent="center">
               {/* FIX: Must use 'item' */}
-              <Grid item xs={12}> 
+              <Grid size={{ xs: 12 }}>
                 <Grid container justifyContent="space-between">
                   {/* FIX: Must use 'item' */}
-                  <Grid item> 
+                  <Grid>
                     <Typography color="textPrimary" gutterBottom variant="h2">
                       Sign in
                     </Typography>
@@ -54,7 +54,7 @@ const Login = () => {
                     </Typography>
                   </Grid>
                   {/* FIX: Must use 'item' */}
-                  <Grid item> 
+                  <Grid>
                     <RouterLink to="/">
                       <img alt="Auth method" src={Logo} />
                     </RouterLink>
@@ -62,12 +62,12 @@ const Login = () => {
                 </Grid>
               </Grid>
               {/* FIX: Must use 'item' */}
-              <Grid item xs={12}> 
+              <Grid size={{ xs: 12 }}>
                 <AuthLogin />
               </Grid>
               <Grid container justifyContent="flex-start" sx={{ mt: theme.spacing(2), mb: theme.spacing(1) }}>
                 {/* FIX: Must use 'item' */}
-                <Grid item> 
+                <Grid>
                   <Typography
                     variant="subtitle2"
                     color="secondary"
