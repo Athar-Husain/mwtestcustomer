@@ -202,8 +202,10 @@ const customerSlice = createSlice({
 
       // Logout customer
       .addCase(logoutCustomer.fulfilled, (state) => {
-        state.isLoading = false;
-        state.isSuccess = true;
+        if (state.isLoggedIn) {
+          // Only toast if they were actually logged in
+          toast.success('Logged out successfully!');
+        }
         state.isLoggedIn = false;
         state.customer = null;
 
@@ -239,9 +241,16 @@ const customerSlice = createSlice({
         (state, action) => {
           state.isLoading = false;
           state.isError = true;
-          state.isSuccess = false;
-          state.message = action.payload || 'Failed to perform action';
-          toast.error(state.message);
+
+          const errorMessage = action.payload || 'Failed to perform action';
+
+          if (errorMessage !== 'No authorization header' && errorMessage !== 'Unauthorized') {
+            toast.error(errorMessage);
+          }
+
+          // state.isSuccess = false;
+          // state.message = action.payload || 'Failed to perform action';
+          // toast.error(state.message);
         }
       );
   }
