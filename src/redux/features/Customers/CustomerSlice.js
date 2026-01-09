@@ -206,6 +206,9 @@ const customerSlice = createSlice({
         state.isSuccess = true;
         state.isLoggedIn = false;
         state.customer = null;
+
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('token_expiry');
         toast.success('Logged out successfully!');
       })
 
